@@ -4,7 +4,7 @@ Compare two comma separated or pipe delimiter separated files and find the diffe
 **Note**: The Script is created based on the assumption, the rows in the table are distinct, atleast one column or combination of few columns forms a primary key.
 
 Check for the latest releases:
-https://github.com/snksqldba88/compare-utility/releases/tag/v0.0.1
+https://github.com/snksqldba88/compare-utility/releases
 
 To use the FileCompare.py
 -------------------------
