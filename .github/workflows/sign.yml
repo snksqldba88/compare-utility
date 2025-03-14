@@ -1,0 +1,49 @@
+name: Build and Sign EXE
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [created]
+
+jobs:
+  build-and-sign:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: pip install pyinstaller
+
+      - name: Build EXE with PyInstaller
+        run: pyinstaller --onefile myscript.py
+
+      - name: Upload Unsigned EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-exe
+          path: dist/myscript.exe
+
+      - name: Submit EXE for Signing
+        env:
+          SIGNPATH_API_KEY: ${{ secrets.SIGNPATH_API_KEY }}
+          SIGNPATH_PROJECT_ID: ${{ secrets.SIGNPATH_PROJECT_ID }}
+          SIGNPATH_ORGANIZATION_ID: ${{ secrets.SIGNPATH_ORGANIZATION_ID }}
+        run: |
+          curl -X POST "https://app.signpath.io/api/v1/${{ secrets.SIGNPATH_ORGANIZATION_ID }}/projects/${{ secrets.SIGNPATH_PROJECT_ID }}/sign" `
+            -H "Authorization: Bearer $env:SIGNPATH_API_KEY" `
+            -F "file=@dist/myscript.exe" `
+            -o signed-myscript.exe
+
+      - name: Upload Signed EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-exe
+          path: signed-myscript.exe
