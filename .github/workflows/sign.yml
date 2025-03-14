@@ -42,6 +42,10 @@ jobs:
             -F "file=@dist/ComparisonTool.exe" `
             -o signed-ComparisonTool.exe
 
+      - name: Check SignPath.io signing status
+        run: curl -H "Authorization:Bearer ${{ secrets.SIGNPATH_API_KEY }}" \
+          "https://app.signpath.io/api/v1/organizations/{ORG_ID}/projects/{PROJECT_ID}/signing-jobs"
+
       - name: Upload Signed EXE
         uses: actions/upload-artifact@v4
         with:
