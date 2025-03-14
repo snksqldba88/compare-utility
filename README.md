@@ -28,3 +28,7 @@ To use the GUI Version
 4. Folder Comparison - It compares two folders with identical files for comparison. Assuming both folders are having identical named files.
 5. File Comparison - It compares two files with similar tabular structure. Assuming two tables with a primary key column or multiple columns making a composite primary key.
 6. Output will be saved in the output folder.
+
+![image](https://github.com/user-attachments/assets/c1f649d8-c93c-42d0-8490-3765aa89e233)
+
+![image](https://github.com/user-attachments/assets/14d64bc4-a306-41c8-b437-7ef8b2c647c3)
