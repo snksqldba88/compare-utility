@@ -23,13 +23,13 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build EXE with PyInstaller
-        run: pyinstaller --onefile myscript.py
+        run: pyinstaller --onefile --icon=compare.ico --noconsole --name="ComparisonTool" ComparisonToolGUI.py
 
       - name: Upload Unsigned EXE
         uses: actions/upload-artifact@v4
         with:
           name: unsigned-exe
-          path: dist/myscript.exe
+          path: dist/ComparisonTool.exe
 
       - name: Submit EXE for Signing
         env:
@@ -39,11 +39,11 @@ jobs:
         run: |
           curl -X POST "https://app.signpath.io/api/v1/${{ secrets.SIGNPATH_ORGANIZATION_ID }}/projects/${{ secrets.SIGNPATH_PROJECT_ID }}/sign" `
             -H "Authorization: Bearer $env:SIGNPATH_API_KEY" `
-            -F "file=@dist/myscript.exe" `
-            -o signed-myscript.exe
+            -F "file=@dist/ComparisonTool.exe" `
+            -o signed-ComparisonTool.exe
 
       - name: Upload Signed EXE
         uses: actions/upload-artifact@v4
         with:
           name: signed-exe
-          path: signed-myscript.exe
+          path: signed-ComparisonTool.exe
